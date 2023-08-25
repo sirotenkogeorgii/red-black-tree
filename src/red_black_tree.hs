@@ -37,3 +37,10 @@ insert_helper tree@(Node left color parent_val right) val
     | otherwise = tree
 
 insert tree val = recolor_root (insert_helper tree val)
+
+
+contains NIL _ = False
+contains (Node left _ parent_val right) val
+    | parent_val < val = contains right val
+    | parent_val > val = contains left val
+    | otherwise = True
