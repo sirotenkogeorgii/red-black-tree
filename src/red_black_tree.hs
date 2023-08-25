@@ -20,12 +20,18 @@ data Color = RED | BLACK
 data Tree a = NIL | Node (Tree a) Color a (Tree a)
 
 resore_insert (Node NIL color val NIL) = (Node NIL color val NIL)
-restore_insert (Node (Node (Node left_x RED x right_x) RED p right_p) BLACK g (Node left_u RED u righ_u)) = (Node (Node (Node left_x RED x right_x) BLACK p right_p) RED g (Node left_u BLACK u righ_u))
-restore_insert (Node (Node left_p RED p (Node left_x RED x right_x)) BLACK g (Node left_u RED u right_u)) = (Node (Node left_p BLACK p (Node left_x RED x right_x)) RED g (Node left_u BLACK u righ_u))
-restore_insert (Node (Node left_p RED p right_p) BLACK g (Node (Node left_x RED x right_x) RED u righ_u)) = (Node (Node left_p BLACK p right_p) RED g (Node (Node left_x RED x right_x) BLACK u righ_u))
+
+restore_insert (Node (Node (Node left_x RED x right_x) RED p right_p) BLACK g (Node left_u RED u right_u)) = (Node (Node (Node left_x RED x right_x) BLACK p right_p) RED g (Node left_u BLACK u right_u))
+restore_insert (Node (Node left_p RED p (Node left_x RED x right_x)) BLACK g (Node left_u RED u right_u)) = (Node (Node left_p BLACK p (Node left_x RED x right_x)) RED g (Node left_u BLACK u right_u))
+restore_insert (Node (Node left_p RED p right_p) BLACK g (Node (Node left_x RED x right_x) RED u right_u)) = (Node (Node left_p BLACK p right_p) RED g (Node (Node left_x RED x right_x) BLACK u right_u))
 restore_insert (Node (Node left_p RED p right_p) BLACK g (Node left_u RED u (Node left_x RED x right_x))) = (Node (Node left_p BLACK p right_p) RED g (Node left_u BLACK u (Node left_x RED x right_x)))
 
+restore_insert (Node (Node (Node left_x RED x right_x) RED p right_p) BLACK g (Node left_u BLACK u right_u)) = (Node (Node left_x RED x right_x) BLACK p (Node right_p RED g (Node left_u BLACK u right_u)))
+restore_insert (Node (Node left_p RED p (Node left_x RED x right_x)) BLACK g (Node left_u BLACK u right_u)) = (Node (Node left_p RED p left_x) BLACK x (Node right_x RED g (Node left_u BLACK u right_u)))
+restore_insert (Node (Node left_u BLACK u right_u) BLACK g (Node left_p RED p (Node left_x RED x right_x))) = (Node (Node (Node left_u BLACK u right_u) RED g left_p) BLACK p (Node left_x RED x right_x))
+restore_insert (Node (Node left_u BLACK u right_u) BLACK g (Node (Node left_x RED x right_x) RED p right_p)) = (Node (Node (Node left_u BLACK u right_u) RED g left_x) BLACK x (Node right_x RED p right_p))
 
+restore_insert tree = tree
 
 insert NIL val = (Node NIL RED val NIL)
 insert tree@(Node left color parent_val right) val
