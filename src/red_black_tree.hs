@@ -35,7 +35,7 @@ restore_insert tree = tree
 
 insert NIL val = (Node NIL RED val NIL)
 insert tree@(Node left color parent_val right) val
-    | parent_val > val = restore_insert (Node left color parent_val (insert right val))
+    | parent_val < val = restore_insert (Node left color parent_val (insert right val))
     | parent_val > val = restore_insert (Node (insert left val) color parent_val right)
     | otherwise = tree
 
