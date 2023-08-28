@@ -27,10 +27,3 @@ main :: IO ()
 main = do
     let tree = Node (Node (Node NIL BLACK 9 NIL) RED 12 (Node NIL BLACK 17 NIL)) BLACK 18 (Node (Node NIL BLACK 20 NIL) RED 27 (Node NIL BLACK 32 (Node NIL RED 42 NIL)))
     display tree
-
-
---     ┌──5
---     ┌──4
---     |   └──3
--- ───2
---     └──1
