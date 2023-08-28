@@ -7,8 +7,8 @@
 --     descendants would sit at a different black depth than N's NIL child, violating requirement 4.
 import DisplayTree
 
-data Color = RED | BLACK deriving (Show, Eq) 
-data Tree a = NIL | Node (Tree a) Color a (Tree a) deriving (Show) 
+-- data Color = RED | BLACK deriving (Show, Eq) 
+-- data Tree a = NIL | Node (Tree a) Color a (Tree a) deriving (Show) 
 
 recolor_root NIL = NIL
 recolor_root tree@(Node left color val right)
