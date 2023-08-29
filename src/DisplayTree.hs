@@ -1,11 +1,7 @@
 module DisplayTree where
+import Helpers
 import Data.List
 
--- TODO: change <$> for map
--- TODO: change . for for (f())
-
-data Color = RED | BLACK deriving (Show, Eq) 
-data Tree a = NIL | Node (Tree a) Color a (Tree a) | DoubleBlackNode (Tree a) deriving (Show,Eq)
 data ParentSide = LeftSide | RightSide | Root deriving (Show,Eq) -- no parent for the root
 
 my_zip xs [] = xs
@@ -13,7 +9,7 @@ my_zip [] xs = xs
 my_zip (x:xs) (y:ys) = current_value : my_zip xs ys
     where current_value = if x == '|' then x else y
 
-process_row parentDirection color value parentPosition level = foldl (my_zip) "" (((++"|").(flip replicate ' ') <$> (4*) <$> parentPosition) ++ [(replicate (4*level) ' ') ++ special_sign ++ show value ++ "(" ++ show color ++ ")"])
+process_row parentDirection color value parentPosition level = foldl (my_zip) "" (((fmap ((++"|").(flip replicate ' ')) (fmap (4*) parentPosition))) ++ [(replicate (4*level) ' ') ++ special_sign ++ show value ++ "(" ++ show color ++ ")"])
                            where special_sign = case parentDirection of Root      -> "───"
                                                                         RightSide -> "└──"
                                                                         LeftSide  -> "┌──"
