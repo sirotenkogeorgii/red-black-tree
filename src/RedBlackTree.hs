@@ -3,15 +3,23 @@ import Helpers
 
 resore_insert (Node NIL color val NIL) = (Node NIL color val NIL) 
 
-restore_insert (Node (Node (Node left_x RED x right_x) RED p right_p) BLACK g (Node left_u RED u right_u)) = (Node (Node (Node left_x RED x right_x) BLACK p right_p) RED g (Node left_u BLACK u right_u))
-restore_insert (Node (Node left_p RED p (Node left_x RED x right_x)) BLACK g (Node left_u RED u right_u)) = (Node (Node left_p BLACK p (Node left_x RED x right_x)) RED g (Node left_u BLACK u right_u))
-restore_insert (Node (Node left_p RED p right_p) BLACK g (Node (Node left_x RED x right_x) RED u right_u)) = (Node (Node left_p BLACK p right_p) RED g (Node (Node left_x RED x right_x) BLACK u right_u))
-restore_insert (Node (Node left_p RED p right_p) BLACK g (Node left_u RED u (Node left_x RED x right_x))) = (Node (Node left_p BLACK p right_p) RED g (Node left_u BLACK u (Node left_x RED x right_x)))
+restore_insert (Node (Node (Node left_x RED x right_x) RED p right_p) BLACK g (Node left_u RED u right_u)) = 
+    (Node (Node (Node left_x RED x right_x) BLACK p right_p) RED g (Node left_u BLACK u right_u))
+restore_insert (Node (Node left_p RED p (Node left_x RED x right_x)) BLACK g (Node left_u RED u right_u)) = 
+    (Node (Node left_p BLACK p (Node left_x RED x right_x)) RED g (Node left_u BLACK u right_u))
+restore_insert (Node (Node left_p RED p right_p) BLACK g (Node (Node left_x RED x right_x) RED u right_u)) = 
+    (Node (Node left_p BLACK p right_p) RED g (Node (Node left_x RED x right_x) BLACK u right_u))
+restore_insert (Node (Node left_p RED p right_p) BLACK g (Node left_u RED u (Node left_x RED x right_x))) = 
+    (Node (Node left_p BLACK p right_p) RED g (Node left_u BLACK u (Node left_x RED x right_x)))
 
-restore_insert (Node (Node (Node left_x RED x right_x) RED p right_p) BLACK g uncle) = (Node (Node left_x RED x right_x) BLACK p (Node right_p RED g uncle))
-restore_insert (Node (Node left_p RED p (Node left_x RED x right_x)) BLACK g uncle) = (Node (Node left_p RED p left_x) BLACK x (Node right_x RED g uncle))
-restore_insert (Node uncle BLACK g (Node left_p RED p (Node left_x RED x right_x))) = (Node (Node uncle RED g left_p) BLACK p (Node left_x RED x right_x))
-restore_insert (Node uncle BLACK g (Node (Node left_x RED x right_x) RED p right_p)) = (Node (Node uncle RED g left_x) BLACK x (Node right_x RED p right_p))
+restore_insert (Node (Node (Node left_x RED x right_x) RED p right_p) BLACK g uncle) = 
+    (Node (Node left_x RED x right_x) BLACK p (Node right_p RED g uncle))
+restore_insert (Node (Node left_p RED p (Node left_x RED x right_x)) BLACK g uncle) = 
+    (Node (Node left_p RED p left_x) BLACK x (Node right_x RED g uncle))
+restore_insert (Node uncle BLACK g (Node left_p RED p (Node left_x RED x right_x))) = 
+    (Node (Node uncle RED g left_p) BLACK p (Node left_x RED x right_x))
+restore_insert (Node uncle BLACK g (Node (Node left_x RED x right_x) RED p right_p)) = 
+    (Node (Node uncle RED g left_x) BLACK x (Node right_x RED p right_p))
 
 restore_insert tree = tree
 
