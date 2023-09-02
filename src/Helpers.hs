@@ -116,10 +116,12 @@ delete_helper tree@(Node left color node_val right) val
           deleted_min_tree = delete_helper tree min_val
 
 
+-- node without children is ok.
 resore_insert (Node NIL color val NIL) = (Node NIL color val NIL) 
 
+-- new node's parent is RED and parent's silbing is RED. just change the color of parent and uncle to BLACK. make gradfather's color RED.
 restore_insert (Node (Node (Node left_x RED x right_x) RED p right_p) BLACK g (Node left_u RED u right_u)) = 
-    (Node (Node (Node left_x RED x right_x) BLACK p right_p) RED g (Node left_u BLACK u right_u))
+    (Node (Node (Node left_x RED x right_x) BLACK p right_p) RED g (Node left_u BLACK u right_u)) 
 restore_insert (Node (Node left_p RED p (Node left_x RED x right_x)) BLACK g (Node left_u RED u right_u)) = 
     (Node (Node left_p BLACK p (Node left_x RED x right_x)) RED g (Node left_u BLACK u right_u))
 restore_insert (Node (Node left_p RED p right_p) BLACK g (Node (Node left_x RED x right_x) RED u right_u)) = 
@@ -127,20 +129,26 @@ restore_insert (Node (Node left_p RED p right_p) BLACK g (Node (Node left_x RED 
 restore_insert (Node (Node left_p RED p right_p) BLACK g (Node left_u RED u (Node left_x RED x right_x))) = 
     (Node (Node left_p BLACK p right_p) RED g (Node left_u BLACK u (Node left_x RED x right_x)))
 
+-- new node's parent is RED and parent's silbing is BLACK or NIL.
 restore_insert (Node (Node (Node left_x RED x right_x) RED p right_p) BLACK g uncle) = 
-    (Node (Node left_x RED x right_x) BLACK p (Node right_p RED g uncle))
+    (Node (Node left_x RED x right_x) BLACK p (Node right_p RED g uncle)) -- right rotation of gradfather and swap the colors of grandfather and parent. 
 restore_insert (Node (Node left_p RED p (Node left_x RED x right_x)) BLACK g uncle) = 
-    (Node (Node left_p RED p left_x) BLACK x (Node right_x RED g uncle))
+    (Node (Node left_p RED p left_x) BLACK x (Node right_x RED g uncle)) -- left rotation of parent and apply the case above. 
 restore_insert (Node uncle BLACK g (Node left_p RED p (Node left_x RED x right_x))) = 
-    (Node (Node uncle RED g left_p) BLACK p (Node left_x RED x right_x))
+    (Node (Node uncle RED g left_p) BLACK p (Node left_x RED x right_x)) -- left rotation of gradfather and swap the colors of grandfather and parent. 
 restore_insert (Node uncle BLACK g (Node (Node left_x RED x right_x) RED p right_p)) = 
-    (Node (Node uncle RED g left_x) BLACK x (Node right_x RED p right_p))
+    (Node (Node uncle RED g left_x) BLACK x (Node right_x RED p right_p)) -- right rotation of parent and apply the case above. 
 
+-- othwewise don't do anything.
 restore_insert tree = tree
 
+
+-- insert value with RED color.
 insert_helper NIL val = (Node NIL RED val NIL)
+
+-- recurse otherwise.
 insert_helper tree@(Node left color parent_val right) val
-    | parent_val < val = restore_insert (Node left color parent_val (insert_helper right val))
-    | parent_val > val = restore_insert (Node (insert_helper left val) color parent_val right)
-    | otherwise = tree
+    | parent_val < val = restore_insert (Node left color parent_val (insert_helper right val)) -- the value being inserted is greater than the current value.
+    | parent_val > val = restore_insert (Node (insert_helper left val) color parent_val right) -- the value being inserted is less than the current value.
+    | otherwise = tree -- the value to be inserted is already in the tree.
 
