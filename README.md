@@ -54,7 +54,8 @@ Further, in order to work with the tree, it must be created. There are two ways 
 * ```multiple_insert```. takes a tree and a list of values to be inserted. Example: ```multiple_insert (Node NIL BLACK 1 NIL) [2,3]```. Result: ```Node (Node NIL RED 1 NIL) BLACK 2 (Node NIL RED 3 NIL)```.
 * ```contains```. takes a tree and a value to be checked for presence in the tree. Example: ```contains (Node (Node NIL RED 1 NIL) BLACK 2 (Node NIL RED 3 NIL)) 1```. The result is ```True```.
 * ```display```. takes a tree and returns its visualization. Example: ```display (create_tree [1,2,3,4,5,6,7,8,9,10])```. Result:
-```                ┌──10(RED)
+```                
+                ┌──10(RED)
             ┌──9(BLACK)
         ┌──8(RED)
         |   └──7(BLACK)
